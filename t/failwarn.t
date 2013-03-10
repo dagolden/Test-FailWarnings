@@ -21,14 +21,19 @@ my @cases = (
         expect => qr/No line number/,
     },
     {
-        label => "-allow_deps => 1",
+        label => "allow_deps true",
         file => "t/bin/allow-deps.pl",
         exit_ok => 1,
     },
     {
-        label => "-allow_deps => 0",
+        label => "allow_deps false",
         file => "t/bin/force-deps.pl",
         expect => qr/is a Perl keyword/,
+    },
+    {
+        label => "allow_from",
+        file => "t/bin/allow-constant.pl",
+        exit_ok => 1,
     },
 );
 
@@ -36,7 +41,8 @@ for my $c (@cases) {
     my ($output, $error, $rc) = capture {  system($^X, $c->{file}) };
     subtest $c->{label} => sub {
         if ( $c->{exit_ok} ) {
-            ok( !$rc, "exit ok" );
+            ok( !$rc, "exit ok" )
+                or diag "ERROR: $error";
         }
         else {
             ok( $rc, "nonzero exit"  );

@@ -10,6 +10,7 @@ use Test::More 0.86;
 use Carp;
 
 our $ALLOW_DEPS = 0;
+our @ALLOW_FROM = ();
 
 sub import {
     my ( $class, @args ) = @_;
@@ -17,17 +18,21 @@ sub import {
         unless @args % 2 == 0;
     my %opts = @args;
     $ALLOW_DEPS = $opts{'-allow_deps'};
+    @ALLOW_FROM =
+      ref $opts{'-allow_from'} ? @{ $opts{'-allow_from'} || [] } : $opts{'-allow_from'};
 }
 
 $SIG{__WARN__} = sub {
     my $msg = shift;
     $msg = '' unless defined $msg;
     chomp $msg;
-    my ( $package, $filename, $line ) = caller;
+    my ( $package, $filename, $line ) = _find_source();
 
     # shortcut if ignoring dependencies and warning did not
     # come from something local
     return if $ALLOW_DEPS && $filename !~ /^(?:t|xt|lib|blib)/;
+
+    return if grep { $package eq $_ } @ALLOW_FROM;
 
     if ( $msg !~ m/at .*? line \d/ ) {
         chomp $msg;
@@ -40,6 +45,16 @@ $SIG{__WARN__} = sub {
     $builder->ok( 0, "Caught warning" )
       or $builder->diag("Warning was $msg");
 };
+
+sub _find_source {
+    my $i = 1;
+    while ( 1 ) { 
+        my ($pkg, $filename, $line) = caller($i++);
+        return caller($i-2) unless defined $pkg;
+        next if $pkg =~ /^(?:Carp|warnings)/;
+        return ($pkg, $filename, $line);
+    }
+}
 
 1;
 
