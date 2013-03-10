@@ -14,15 +14,16 @@ our @ALLOW_FROM = ();
 
 sub import {
     my ( $class, @args ) = @_;
-    croak( "import arguments must be key/value pairs" )
-        unless @args % 2 == 0;
+    croak("import arguments must be key/value pairs")
+      unless @args % 2 == 0;
     my %opts = @args;
     $ALLOW_DEPS = $opts{'-allow_deps'};
     @ALLOW_FROM =
       ref $opts{'-allow_from'} ? @{ $opts{'-allow_from'} || [] } : $opts{'-allow_from'};
+    $SIG{__WARN__} = \&handler;
 }
 
-$SIG{__WARN__} = sub {
+sub handler {
     my $msg = shift;
     $msg = '' unless defined $msg;
     chomp $msg;
@@ -44,21 +45,21 @@ $SIG{__WARN__} = sub {
     my $builder = Test::More->builder;
     $builder->ok( 0, "Caught warning" )
       or $builder->diag("Warning was $msg");
-};
+}
 
 sub _find_source {
     my $i = 1;
-    while ( 1 ) { 
-        my ($pkg, $filename, $line) = caller($i++);
-        return caller($i-2) unless defined $pkg;
+    while (1) {
+        my ( $pkg, $filename, $line ) = caller( $i++ );
+        return caller( $i - 2 ) unless defined $pkg;
         next if $pkg =~ /^(?:Carp|warnings)/;
-        return ($pkg, $filename, $line);
+        return ( $pkg, $filename, $line );
     }
 }
 
 1;
 
-=for Pod::Coverage method_names_here
+=for Pod::Coverage handler
 
 =head1 SYNOPSIS
 
