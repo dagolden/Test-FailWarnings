@@ -121,7 +121,7 @@ the real origin of the warning.
 =head2 Allowing warnings from dependencies
 
 If you want to ignore failures from outside your own code, you can set
-C<$Test::FailWarnings::ALLOW_DEPS> package variable to a true value.  You can
+C<$Test::FailWarnings::ALLOW_DEPS> to a true value.  You can
 do that on the C<use> line with C<< -allow_deps >>.
 
     use Test::FailWarnings -allow_deps => 1;
