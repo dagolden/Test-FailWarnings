@@ -6,7 +6,7 @@ Test::FailWarnings - Add test failures if warnings are caught
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 SYNOPSIS
 
@@ -42,7 +42,49 @@ don't need to know the test count in advance.
 Just as with L<Test::NoWarnings>, this does not catch warnings if other things
 localize C<$SIG{__WARN__}>, as this is designed to catch I<unhandled> warnings.
 
-=for Pod::Coverage method_names_here
+=for Pod::Coverage handler
+
+=head1 USAGE
+
+=head2 Overriding C<$SIG{__WARN__}>
+
+On C<import>, C<$SIG{__WARN__}> is replaced with
+C<Test::FailWarnings::handler>.
+
+    use Test::FailWarnings;  # global
+
+If you don't want global replacement, require the module instead and localize
+in whatever scope you want.
+
+    require Test::FailWarnings;
+
+    {
+        local $SIG{__WARN__} = \&Test::FailWarnings::handler;
+        # ... warnings will issue fail() here
+    }
+
+When the handler reports on the source of the warning, it will look past
+any calling packages starting with C<Carp> or C<warnings> to try to detect
+the real origin of the warning.
+
+=head2 Allowing warnings from dependencies
+
+If you want to ignore failures from outside your own code, you can set
+C<$Test::FailWarnings::ALLOW_DEPS> package variable to a true value.  You can
+do that on the C<use> line with C<< -allow_deps >>.
+
+    use Test::FailWarnings -allow_deps => 1;
+
+When true, warnings will only be thrown if they appear to originate from a filename
+matching C<< qr/^(?:t|xt|lib|blib)/ >>
+
+=head2 Allowing warnings from specific modules
+
+If you want to white-list specific modules only, you can add their package
+names to C<@Test::NoWarnings::ALLOW_FROM>.  You can do that on the C<use> line
+with C<< -allow_from >>.
+
+    use Test::FailWarnings -allow_from => [ qw/Annoying::Module/ ];
 
 =head1 SEE ALSO
 
