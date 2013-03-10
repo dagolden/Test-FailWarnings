@@ -20,6 +20,16 @@ my @cases = (
         file => "t/bin/warn-newline.pl",
         expect => qr/No line number/,
     },
+    {
+        label => "-allow_deps => 1",
+        file => "t/bin/allow-deps.pl",
+        exit_ok => 1,
+    },
+    {
+        label => "-allow_deps => 0",
+        file => "t/bin/force-deps.pl",
+        expect => qr/is a Perl keyword/,
+    },
 );
 
 for my $c (@cases) {
@@ -30,8 +40,8 @@ for my $c (@cases) {
         }
         else {
             ok( $rc, "nonzero exit"  );
+            like( $c->{stdout} ? $output : $error, $c->{expect}, "exception text" );
         }
-        like( $c->{stdout} ? $output : $error, $c->{expect}, "exception text" );
     };
 }
 
