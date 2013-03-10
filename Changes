@@ -6,6 +6,13 @@ Revision history for Test-FailWarnings
 
     - Now can optionally allow warnings from dependencies
 
+    - Now can optionally allow warnings from specific modules
+
+    [CHANGED]
+
+    - warnings handler only installed by import(); handler function
+      is now available for custom, localized use
+
 0.001     2013-02-25 17:44:33 America/New_York
 
     - First release
