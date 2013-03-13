@@ -2,6 +2,10 @@ Revision history for Test-FailWarnings
 
 {{$NEXT}}
 
+    [FIXED]
+
+    - Fixed @ALLOW_FROM initialization to suppress our own warning
+
 0.002     2013-03-10 17:28:53 America/New_York
 
     [ADDED]

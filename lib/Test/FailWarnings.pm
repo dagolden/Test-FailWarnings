@@ -18,8 +18,10 @@ sub import {
       unless @args % 2 == 0;
     my %opts = @args;
     $ALLOW_DEPS = $opts{'-allow_deps'};
-    @ALLOW_FROM =
-      ref $opts{'-allow_from'} ? @{ $opts{'-allow_from'} || [] } : $opts{'-allow_from'};
+    if ( $opts{'-allow_from'} ) {
+        @ALLOW_FROM =
+          ref $opts{'-allow_from'} ? @{ $opts{'-allow_from'} } : $opts{'-allow_from'};
+    }
     $SIG{__WARN__} = \&handler;
 }
 
