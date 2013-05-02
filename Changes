@@ -2,6 +2,8 @@ Revision history for Test-FailWarnings
 
 {{$NEXT}}
 
+0.004     2013-05-02 10:50:37 America/New_York
+
     [FIXED]
 
     - Bumped Capture::Tiny test prerequisite version
