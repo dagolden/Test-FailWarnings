@@ -143,6 +143,7 @@ with C<< -allow_from >>.
 
 =for :list
 * L<Test::NoWarnings> -- catches warnings and reports in an C<END> block.  Not (yet) friendly with C<done_testing>.
+* L<Test::Warnings> -- a replacement for Test::NoWarnings that works with done_testing
 * L<Test::Warn> -- test for warnings without triggering failures from this modules
 
 =cut
