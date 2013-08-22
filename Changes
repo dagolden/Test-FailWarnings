@@ -2,6 +2,10 @@ Revision history for Test-FailWarnings
 
 {{$NEXT}}
 
+    [CHANGED]
+
+    - The label of the failing test has been revised for clarity
+
 0.005     2013-05-03 14:03:28 America/New_York
 
     [DOCUMENTED]

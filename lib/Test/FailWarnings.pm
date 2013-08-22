@@ -45,7 +45,7 @@ sub handler {
         $msg = "'$msg'";
     }
     my $builder = Test::More->builder;
-    $builder->ok( 0, "Caught warning" )
+    $builder->ok( 0, "Test::FailWarnings should catch no warnings" )
       or $builder->diag("Warning was $msg");
 }
 
