@@ -8,6 +8,7 @@ package Test::FailWarnings;
 
 use Test::More 0.86;
 use Carp;
+use Cwd ();
 
 our $ALLOW_DEPS = 0;
 our @ALLOW_FROM = ();
@@ -30,6 +31,13 @@ sub handler {
     $msg = '' unless defined $msg;
     chomp $msg;
     my ( $package, $filename, $line ) = _find_source();
+
+		# If the filename is absolute, make it relative if the file is in the
+		# current path. This allows properly detecting "local" dependencies.
+		if ( $filename =~ /^(?:\/|[a-z]:\\)/i ) {
+			my $directory = Cwd::getcwd();
+			$filename =~ s/^\Q$directory\E[\\\/]//;
+		}
 
     # shortcut if ignoring dependencies and warning did not
     # come from something local
