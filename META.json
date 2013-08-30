@@ -4,7 +4,7 @@
       "David Golden <dagolden@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300035, CPAN::Meta::Converter version 2.132140",
+   "generated_by" : "Dist::Zilla version 4.300037, CPAN::Meta::Converter version 2.132140",
    "license" : [
       "apache_2_0"
    ],
@@ -41,6 +41,8 @@
       "runtime" : {
          "requires" : {
             "Carp" : "0",
+            "Cwd" : "0",
+            "File::Spec" : "0",
             "Test::More" : "0.86",
             "perl" : "5.008001",
             "strict" : "0",
@@ -51,11 +53,13 @@
          "requires" : {
             "Capture::Tiny" : "0.12",
             "ExtUtils::MakeMaker" : "0",
+            "File::Spec" : "0",
             "File::Spec::Functions" : "0",
             "File::Temp" : "0",
+            "IO::Handle" : "0",
+            "IPC::Open3" : "0",
             "List::Util" : "0",
             "Test::More" : "0.96",
-            "blib" : "0",
             "constant" : "0",
             "lib" : "0"
          }
@@ -64,7 +68,7 @@
    "provides" : {
       "Test::FailWarnings" : {
          "file" : "lib/Test/FailWarnings.pm",
-         "version" : "0.006"
+         "version" : "0.007"
       }
    },
    "release_status" : "stable",
@@ -79,7 +83,7 @@
          "web" : "https://github.com/dagolden/test-failwarnings"
       }
    },
-   "version" : "0.006",
+   "version" : "0.007",
    "x_authority" : "cpan:DAGOLDEN"
 }
 
