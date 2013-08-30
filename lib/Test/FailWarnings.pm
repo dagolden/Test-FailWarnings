@@ -80,8 +80,8 @@ Test file:
 Output:
 
     ok 1 - first test
-    not ok 2 - Caught warning
-    #   Failed test 'Caught warning'
+    not ok 2 - Test::FailWarnings should catch no warnings
+    #   Failed test 'Test::FailWarnings should catch no warnings'
     #   at t/bin/main-warn.pl line 7.
     # Warning was 'Argument "lkadjaks" isn't numeric in addition (+) at t/bin/main-warn.pl line 7.'
     ok 3 - add non-numeric
@@ -90,7 +90,7 @@ Output:
 
 =head1 DESCRIPTION
 
-This module hooks C<$SIG{__WARN__}> and converts warnings to L<Test::More>'s
+This module hooks C<$SIG{__WARN__}> and converts warnings to L<Test::More>
 C<fail()> calls.  It is designed to be used with C<done_testing>, when you
 don't need to know the test count in advance.
 

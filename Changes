@@ -2,6 +2,10 @@ Revision history for Test-FailWarnings
 
 {{$NEXT}}
 
+    [DOCUMENTED]
+
+    - Fixed synopsis to match new failing test label
+
 0.006     2013-08-22 10:41:11 America/New_York
 
     [CHANGED]
