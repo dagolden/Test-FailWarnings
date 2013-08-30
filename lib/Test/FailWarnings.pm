@@ -7,10 +7,14 @@ package Test::FailWarnings;
 # VERSION
 
 use Test::More 0.86;
+use Cwd qw/getcwd/;
+use File::Spec;
 use Carp;
 
 our $ALLOW_DEPS = 0;
 our @ALLOW_FROM = ();
+
+my $ORIG_DIR = getcwd(); # cache in case handler runs after a chdir
 
 sub import {
     my ( $class, @args ) = @_;
@@ -33,7 +37,11 @@ sub handler {
 
     # shortcut if ignoring dependencies and warning did not
     # come from something local
-    return if $ALLOW_DEPS && $filename !~ /^(?:t|xt|lib|blib)/;
+    if ( $ALLOW_DEPS ) {
+        $filename = File::Spec->abs2rel( $filename, $ORIG_DIR )
+            if File::Spec->file_name_is_absolute( $filename );
+        return if $filename !~ /^(?:t|xt|lib|blib)/;
+    }
 
     return if grep { $package eq $_ } @ALLOW_FROM;
 

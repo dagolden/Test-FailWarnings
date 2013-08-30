@@ -2,6 +2,13 @@ Revision history for Test-FailWarnings
 
 {{$NEXT}}
 
+    [FIXED]
+
+    - In some situations, the source of a local warning can have an
+      absolute filename and would not be reported if ALLOW_DEPS were true.
+      Now absolute filenames are made relative to the original cwd before
+      checking if they are local or not.
+
     [DOCUMENTED]
 
     - Fixed synopsis to match new failing test label
