@@ -37,9 +37,9 @@ sub handler {
 
     # shortcut if ignoring dependencies and warning did not
     # come from something local
-    if ( $ALLOW_DEPS ) {
+    if ($ALLOW_DEPS) {
         $filename = File::Spec->abs2rel( $filename, $ORIG_DIR )
-            if File::Spec->file_name_is_absolute( $filename );
+          if File::Spec->file_name_is_absolute($filename);
         return if $filename !~ /^(?:t|xt|lib|blib)/;
     }
 
