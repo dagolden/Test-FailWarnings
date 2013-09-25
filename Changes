@@ -2,6 +2,14 @@ Revision history for Test-FailWarnings
 
 {{$NEXT}}
 
+    [FIXES]
+
+    - Compile test could hang on Windows
+
+    [PREREQS]
+
+    - Dropped configure_requires for ExtUtils::MakeMaker to 6.17
+
 0.007     2013-08-30 09:53:47 America/New_York
 
     [FIXED]
